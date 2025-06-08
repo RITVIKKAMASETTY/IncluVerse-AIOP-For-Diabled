@@ -12,8 +12,8 @@ const Footer = () => (
         <div>
           <h4 className="text-lg font-semibold mb-4">Quick Links</h4>
           <ul className="space-y-2 text-gray-300">
-            <li><a href="#" className="hover:text-white transition-colors">Home</a></li>
-            <li><a href="#" className="hover:text-white transition-colors">About</a></li>
+            <li><a href="/" className="hover:text-white transition-colors">Home</a></li>
+            <li><a href="/about" className="hover:text-white transition-colors">About</a></li>
             <li><a href="#" className="hover:text-white transition-colors">Services</a></li>
           </ul>
         </div>
@@ -50,10 +50,17 @@ const IncluVerseLanding = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  const handleSubscribe = (e) => {
-    e.preventDefault();
-    console.log('Subscribing with email:', email);
-    // Handle subscription logic here
+
+  const handleNavigation = (path) => {
+    // In a real application with React Router, you would use navigate(path)
+    // For now, we'll use window.location to navigate
+    window.location.href = path;
+    setIsMenuOpen(false); // Close menu after navigation
+  };
+
+  const handleLearnMore = () => {
+    // Navigate to about page
+    window.location.href = '/about';
   };
 
   const menuItems = [
@@ -80,9 +87,12 @@ const IncluVerseLanding = () => {
         <div className="w-full px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-4 lg:py-6">
             <div className="flex items-center min-w-0">
-              <div className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight">
+              <button 
+                onClick={() => handleNavigation('/')}
+                className="text-2xl sm:text-3xl lg:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent tracking-tight hover:scale-105 transition-transform duration-200"
+              >
                 IncluVerse
-              </div>
+              </button>
               <div className="hidden lg:block ml-4 h-6 w-px bg-gray-300"></div>
               <div className="hidden lg:block ml-4 text-sm text-gray-600 font-medium whitespace-nowrap">
                 All-in-One Platform for Disabled People
@@ -90,8 +100,18 @@ const IncluVerseLanding = () => {
             </div>
             
             <nav className="hidden md:flex items-center space-x-8 lg:space-x-12">
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base lg:text-lg">Home</a>
-              <a href="#" className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base lg:text-lg">About</a>
+              <button 
+                onClick={() => handleNavigation('/')}
+                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base lg:text-lg"
+              >
+                Home
+              </button>
+              <button 
+                onClick={() => handleNavigation('/about')}
+                className="text-gray-700 hover:text-blue-600 transition-colors duration-200 font-medium text-base lg:text-lg"
+              >
+                About
+              </button>
               <button 
                 onClick={toggleMenu}
                 className="text-gray-700 hover:text-blue-600 flex items-center transition-colors duration-200 font-medium text-base lg:text-lg"
@@ -120,21 +140,31 @@ const IncluVerseLanding = () => {
               </div>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 lg:gap-4">
                 {menuItems.map((item, index) => (
-                  <a
+                  <button
                     key={index}
-                    href={`/${pages[index]}`}
-                    className="block px-4 lg:px-6 py-3 lg:py-4 text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 rounded-xl transition-all duration-200 font-medium border border-gray-100 hover:border-blue-200 shadow-sm hover:shadow-md text-sm lg:text-base"
+                    onClick={() => handleNavigation(`/${pages[index]}`)}
+                    className="block w-full text-left px-4 lg:px-6 py-3 lg:py-4 text-gray-700 hover:bg-gradient-to-r hover:from-blue-50 hover:to-purple-50 hover:text-blue-600 rounded-xl transition-all duration-200 font-medium border border-gray-100 hover:border-blue-200 shadow-sm hover:shadow-md text-sm lg:text-base"
                   >
                     {item}
-                  </a>
+                  </button>
                 ))}
               </div>
               
               {/* Mobile navigation items */}
               <div className="md:hidden mt-6 pt-6 border-t border-gray-200">
                 <div className="space-y-3">
-                  <a href="#" className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors font-medium">Home</a>
-                  <a href="#" className="block px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors font-medium">About</a>
+                  <button 
+                    onClick={() => handleNavigation('/')}
+                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors font-medium"
+                  >
+                    Home
+                  </button>
+                  <button 
+                    onClick={() => handleNavigation('/about')}
+                    className="block w-full text-left px-4 py-3 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-xl transition-colors font-medium"
+                  >
+                    About
+                  </button>
                 </div>
               </div>
             </div>
@@ -172,10 +202,10 @@ const IncluVerseLanding = () => {
               </p>
               
               <div className="flex flex-col sm:flex-row gap-3 lg:gap-4 justify-center lg:justify-start">
-                <button className="bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 sm:px-8 lg:px-10 py-3 lg:py-4 rounded-xl text-base lg:text-lg font-semibold hover:from-blue-700 hover:to-purple-700 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105">
-                  Get Started
-                </button>
-                <button className="border-2 border-gray-300 text-gray-700 px-6 sm:px-8 lg:px-10 py-3 lg:py-4 rounded-xl text-base lg:text-lg font-semibold hover:border-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300">
+                <button 
+                  onClick={handleLearnMore}
+                  className="border-2 border-gray-300 text-gray-700 px-6 sm:px-8 lg:px-10 py-3 lg:py-4 rounded-xl text-base lg:text-lg font-semibold hover:border-blue-600 hover:text-blue-600 hover:bg-blue-50 transition-all duration-300 transform hover:scale-105"
+                >
                   Learn More
                 </button>
               </div>
@@ -294,6 +324,7 @@ const IncluVerseLanding = () => {
 
       {/* Enhanced Chat Button */}
       <button 
+        onClick={() => handleNavigation('/chatbot')}
         className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 sm:p-4 lg:p-5 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 lg:space-x-3 z-50 group" 
         aria-label="Open accessibility chat"
       >
