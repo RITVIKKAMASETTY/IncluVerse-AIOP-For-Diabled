@@ -190,7 +190,7 @@ const Chatbot = () => {
     setLoading(true);
     const newMessages = [...messages, { role: "user", content: input }];
     setMessages(newMessages);
-
+  
     try {
       const chat = new ChatOpenAI({
         openAIApiKey: import.meta.env.VITE_GROQ_API_KEY,
@@ -198,22 +198,61 @@ const Chatbot = () => {
         configuration: { baseURL: "https://api.groq.com/openai/v1" },
         temperature: 0.7
       });
-
+  
       const response = await chat.invoke([
-        new SystemMessage(`Respond in ${languageMap[selectedLang]}.`),
+        new SystemMessage(
+          `You are IncluVerse's support chatbot.
+  
+  Only answer questions in these categories:
+  1.About the webiste: Incluverse is an all in one platform designed to serve the disbaled.
+  2. Features of the IncluVerse website:
+     - Pdfs/Image Analyzer
+     - Grievance Handler
+     - Bus Buddy Bol
+     - Emergency Support
+  3. General accessibility and disability-related questions.
+  
+  If the user asks anything beyond these categories — like personal questions, jokes, etc. — respond with:
+  
+  "I'm here to assist with IncluVerse features and accessibility-related topics. Please ask something relevant."
+  
+  Never break this rule. Always reply in ${languageMap[selectedLang]}.`
+        ),
         new HumanMessage(input)
       ]);
-
-      const updatedMessages = [...newMessages, { role: "assistant", content: response.content }];
+  
+      const assistantReply = response.content;
+      const updatedMessages = [...newMessages, { role: "assistant", content: assistantReply }];
       setMessages(updatedMessages);
-      startSpeaking(response.content);
+      startSpeaking(assistantReply);
+  
+      // Auto-redirect logic
+      const routeMap = {
+        "pdfs/image analyzer": "/img_analyzer",
+        "grievance handler": "/greviance",
+        "bus buddy bol": "/busbuddybol",
+        "emergency": "/emergency"
+      };
+  
+      const lowerInput = input.toLowerCase();
+      const redirectPath = Object.keys(routeMap).find(page =>
+        lowerInput.includes(page)
+      );
+  
+      if (redirectPath) {
+        setTimeout(() => {
+          window.location.href = routeMap[redirectPath];
+        }, 3000); // Redirect after 3 seconds
+      }
+  
     } catch (err) {
       console.error("Chat error:", err);
     }
-
+  
     setInput("");
     setLoading(false);
   };
+  
 
   const handleVoiceInput = () => {
     const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
