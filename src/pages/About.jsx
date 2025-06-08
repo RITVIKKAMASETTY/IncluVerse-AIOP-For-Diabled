@@ -460,15 +460,16 @@ const IncluVerseAbout = () => {
     
 
       {/* Chat Button */}
-      <button 
-        className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 sm:p-4 lg:p-5 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 lg:space-x-3 z-50 group" 
-        aria-label="Open accessibility chat"
-      >
-        <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 group-hover:animate-pulse" />
-        <span className="hidden sm:inline font-semibold text-sm lg:text-lg whitespace-nowrap">
-          Need Help?
-        </span>
-      </button>
+        <button 
+              onClick={() => handleNavigation('/chatbot')}
+              className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 lg:bottom-8 lg:right-8 bg-gradient-to-r from-blue-600 to-purple-600 text-white p-3 sm:p-4 lg:p-5 rounded-full shadow-2xl hover:shadow-3xl transition-all duration-300 transform hover:scale-110 flex items-center space-x-2 lg:space-x-3 z-50 group" 
+              aria-label="Open accessibility chat"
+            >
+              <MessageCircle className="h-5 w-5 sm:h-6 sm:w-6 group-hover:animate-pulse" />
+              <span className="hidden sm:inline font-semibold text-sm lg:text-lg whitespace-nowrap">
+                Need Help?
+              </span>
+            </button>
       
       <Footer />
     </div>
